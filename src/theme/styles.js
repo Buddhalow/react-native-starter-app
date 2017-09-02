@@ -16,7 +16,6 @@ export default {
 
   // Default
   container: {
-    position: 'relative',
     flex: 1,
     flexDirection: 'column',
     backgroundColor: Colors.background,

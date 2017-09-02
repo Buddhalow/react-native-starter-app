@@ -13,11 +13,11 @@ import { Icon } from 'react-native-elements';
 import { AppColors } from '@theme/';
 
 /* Component ==================================================================== */
-const TabIcon = ({ icon, selected }) => (
+const TabIcon = ({ icon, focused }) => (
   <Icon
     name={icon}
     size={26}
-    color={selected ? AppColors.tabbar.iconSelected : AppColors.tabbar.iconDefault}
+    color={focused ? AppColors.tabbar.iconSelected : AppColors.tabbar.iconDefault}
   />
 );
 
@@ -25,4 +25,4 @@ TabIcon.propTypes = { icon: PropTypes.string.isRequired, selected: PropTypes.boo
 TabIcon.defaultProps = { icon: 'search', selected: false };
 
 /* Export Component ==================================================================== */
-export default TabIcon;
+export default icon => props => TabIcon({ ...props, icon });

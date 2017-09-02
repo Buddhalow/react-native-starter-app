@@ -5,50 +5,53 @@
  * React Native Starter App
  * https://github.com/mcnamee/react-native-starter-app
  */
-/* global __DEV__ */
 import React from 'react';
-import { applyMiddleware, compose, createStore } from 'redux';
-import { connect, Provider } from 'react-redux';
-import { createLogger } from 'redux-logger';
-import thunk from 'redux-thunk';
-import { Router } from 'react-native-router-flux';
+import { Router, Tabs, Drawer, Scene, Stack, Lightbox } from 'react-native-router-flux';
 
 // Consts and Libs
-import { AppStyles } from '@theme/';
-import AppRoutes from '@navigation/';
-import Analytics from '@lib/analytics';
+import { AppConfig } from './constants/';
+import Launch from './scenes/Launch';
+import Login from './scenes/Login';
+import SignUp from './scenes/SignUp';
+import DrawerMenu from './scenes/DrawerMenu';
+import userStore from './stores/userStore';
+import ListingView from './scenes/ListingView';
+import RecipeView from './scenes/RecipeView';
+import UpdateProfile from './scenes/UpdateProfile';
+import PasswordReset from './scenes/ResetPassword';
+import { TabIcon } from '@ui/';
+import Placeholder from '@components/general/Placeholder';
+import Error from '@components/general/Error';
+import StyleGuide from './scenes/StyleGuideView';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { observer } from 'mobx-react/native';
 
-// All redux reducers (rolled into one mega-reducer)
-import rootReducer from '@redux/index';
-
-// Connect RNRF with Redux
-const RouterWithRedux = connect()(Router);
-
-// Load middleware
-let middleware = [
-  Analytics,
-  thunk, // Allows action creators to return functions (not just plain objects)
-];
-
-if (__DEV__) {
-  // Dev-only middleware
-  middleware = [
-    ...middleware,
-    createLogger(), // Logs state changes to the dev console
-  ];
-}
-
-// Init redux store (using the given reducer & middleware)
-const store = compose(
-  applyMiddleware(...middleware),
-)(createStore)(rootReducer);
-
-/* Component ==================================================================== */
-// Wrap App in Redux provider (makes Redux available to all sub-components)
-export default function AppContainer() {
-  return (
-    <Provider store={store}>
-      <RouterWithRedux scenes={AppRoutes} style={AppStyles.appContainer} />
-    </Provider>
-  );
-}
+const drawerIcon = () => <Icon name={userStore.uid ? 'ios-contact' : 'ios-contact-outline'} size={30} color={'#FFF'} />;
+export default () => (
+  <Router wrapBy={observer}>
+    <Lightbox>
+      <Stack {...AppConfig.navbarProps} headerMode="screen">
+        <Scene component={Launch} on={userStore.load} success="doCheck" failure="loginForm" />
+        <Scene key="login" component={Login} type="reset" title="Login" />
+        <Scene key="signUp" component={SignUp} title="Sign Up" />
+        <Scene key="passwordReset" component={PasswordReset} title="Password Reset" />
+        <Drawer key="app" contentComponent={DrawerMenu} hideNavBar type="reset" drawerIcon={drawerIcon}>
+          <Tabs hideNavBar>
+            <Stack title="Recipes" icon={TabIcon('search')} headerMode="float">
+              <Scene component={ListingView} />
+              <Scene key="recipeView" component={RecipeView} back />
+            </Stack>
+            <Scene title="Coming Soon" component={Placeholder} icon={TabIcon('timeline')} />
+            <Scene title="Example Error" component={Error} icon={TabIcon('error')} />
+            <Scene title="Style Guide" component={StyleGuide} icon={TabIcon('speaker-notes')} />
+          </Tabs>
+        </Drawer>
+        <Scene key="updateProfile" title="Update Profile" back component={UpdateProfile} />
+      </Stack>
+      <Scene key="doCheck" on={userStore.hasCredentials} success="doAuth" failure="login" />
+      <Scene key="doAuth" on={userStore.login} success="app" failure="login" />
+      <Scene key="doSignUp" on={userStore.signUp} success="app" failure="signUp" />
+      <Scene key="logout" on={userStore.logout} success="login" />
+    </Lightbox>
+  </Router>
+);
