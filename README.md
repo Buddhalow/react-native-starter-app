@@ -41,7 +41,7 @@ What's more, it's now integrated with [Firebase](https://firebase.google.com/), 
 
 | Feature | Summary |
 | --- | --- |
-| [Redux](https://github.com/reactjs/react-redux) | A predictable state container - Helping you write applications that behave consistently and run in different environments. |
+| [MobX](https://mobx.js.org) | Simple, scalable state management |
 | [React Native Router Flux](https://github.com/aksonov/react-native-router-flux) | Router for React Native based on new React Native Navigation API. <br><br>['How to' Guide &rarr;](/src/navigation/README.md)|
 | [Firebase](https://firebase.google.com) | Most apps needs some sort of data. RNSK is setup and ready to go with 'data from the cloud'. |
 | [Sidebar / Hamburger Menu](https://github.com/react-native-community/react-native-side-menu) | ... |
@@ -127,9 +127,8 @@ Want to experiment even more with Firebase? Check out the [Firebase Cloud Functi
 - `/src` - Contains the full React Native App codebase
   - `/components` - 'Dumb-components' / presentational. [Read More &rarr;](/src/components/README.md)
   - `/constants` - App-wide variables and config
-  - `/containers` - 'Smart-components' / the business logic. [Read More &rarr;](/src/containers/README.md)
+  - `/scenes` - screens for application
+  - `/stores` - MobX stores (the business logic)
   - `/images` - Self explanatory right?
   - `/lib` - Utils, custom libraries, functions
-  - `/navigation`- Routes - wire up the router with any & all screens. [Read More &rarr;](/src/navigation/README.md)
-  - `/redux` - Redux Reducers & Actions grouped by type. [Read More &rarr;](/src/redux/README.md)
   - `/theme` - Theme specific styles and variables
