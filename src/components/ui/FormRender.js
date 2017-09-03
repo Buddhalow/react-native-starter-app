@@ -13,7 +13,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import FormValidation from 'tcomb-form-native';
-import { Actions } from 'react-native-router-flux';
 
 // Consts and Libs
 import { AppStyles } from '@theme/';
@@ -263,7 +262,7 @@ class AuthForm extends Component {
 
           {this.props.formType === 'login' &&
             <View>
-              <TouchableOpacity onPress={Actions.passwordReset}>
+              <TouchableOpacity onPress={this.props.onForgotPassword}>
                 <Text p style={[AppStyles.textCenterAligned, AppStyles.link]}>
                   Forgot Password
                 </Text>
@@ -275,7 +274,7 @@ class AuthForm extends Component {
                 - or -
               </Text>
 
-              <Button outlined title={'Sign Up'} onPress={Actions.signUp} />
+              <Button outlined title={'Sign Up'} onPress={this.props.onSignUp} />
             </View>
           }
         </Card>

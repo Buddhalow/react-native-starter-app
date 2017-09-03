@@ -32,7 +32,10 @@ export default () => (
     <Lightbox>
       <Stack {...AppConfig.navbarProps} headerMode="screen">
         <Scene component={Launch} on={userStore.load} success="doCheck" failure="loginForm" />
-        <Scene key="login" component={Login} type="reset" title="Login" />
+        <Scene key="login" component={Login} type="reset" title="Login"
+               onLogin="doAuth"
+               onSignUp="signUp"
+               onForgotPassword="passwordReset"/>
         <Scene key="signUp" component={SignUp} title="Sign Up" />
         <Scene key="passwordReset" component={PasswordReset} title="Password Reset" />
         <Drawer key="app" contentComponent={DrawerMenu} hideNavBar type="reset" drawerIcon={drawerIcon}>
