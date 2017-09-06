@@ -2,7 +2,6 @@
   "passPerPreset": true,
   "presets": [
     "react-native",
-    "react-native-dotenv"
   ],
   "plugins": ["transform-decorators-legacy", "transform-class-properties", "mobx-deep-action"],
   "env": {

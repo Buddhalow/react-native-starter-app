@@ -11,7 +11,7 @@ import {
   DATABASE_URL,
   STORAGE_BUCKET,
   MESSAGING_SENDER_ID,
-} from 'react-native-dotenv';
+} from '../settings.json';
 
 let firebaseInitialized = false;
 
